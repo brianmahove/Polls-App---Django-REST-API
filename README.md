@@ -1,98 +1,126 @@
-Polls App - Django REST API
-A modern, full-featured polling application built with Django and Django REST Framework. Create polls, vote in real-time, and view results with beautiful visualizations.
+# Polls App - Django REST API
 
-🚀 Features
-RESTful API - Complete CRUD operations for polls
+A modern, full‑featured polling application built with **Django** and **Django REST Framework**. Create polls, vote in real‑time, and view results with beautiful visualizations.
 
-Real-time Voting - Instant vote counting with percentages
+---
 
-Modern UI - Responsive design with beautiful gradients
+## 🚀 Features
 
-CSRF Protection - Secure form handling
+* **RESTful API** — Complete CRUD operations for polls
+* **Real‑time Voting** — Instant vote counting with percentages
+* **Modern UI** — Responsive design with beautiful gradients
+* **CSRF Protection** — Secure form handling
+* **Anonymous Voting** — No authentication required
+* **Results Visualization** — Percentage bars and vote counts
+* **Admin Interface** — Full Django admin support
 
-Anonymous Voting - No authentication required
+---
 
-Results Visualization - Percentage bars and vote counts
+## 🛠️ Tech Stack
 
-Admin Interface - Full Django admin support
+* **Backend:** Django 5.0, Django REST Framework
+* **Frontend:** Vanilla JavaScript, CSS3, HTML5
+* **Database:** SQLite (default, easily configurable for PostgreSQL/MySQL)
+* **Authentication:** Session‑based with CSRF protection
 
-🛠️ Tech Stack
-Backend: Django 5.0, Django REST Framework
+---
 
-Frontend: Vanilla JavaScript, CSS3, HTML5
+## 📦 Installation
 
-Database: SQLite (default, easily configurable for PostgreSQL/MySQL)
+Clone the repository:
 
-Authentication: Session-based with CSRF protection
-
-📦 Installation
-Clone the repository
-
-bash
+```bash
 git clone https://github.com/yourusername/django-polls-app.git
 cd django-polls-app
-Create virtual environment
+```
 
-bash
+Create a virtual environment:
+
+```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies
+```
 
-bash
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
-Run migrations
+```
 
-bash
+Run migrations:
+
+```bash
 python manage.py migrate
-Create superuser
+```
 
-bash
+Create a superuser:
+
+```bash
 python manage.py createsuperuser
-Run development server
+```
 
-bash
+Run development server:
+
+```bash
 python manage.py runserver
-Visit http://127.0.0.1:8000/ to see the application!
+```
 
-🎯 Quick Start
-Using the Web Interface
-View Polls: Navigate to /polls/ to see all active polls
+Visit `http://127.0.0.1:8000/` to see the application.
 
-Create Poll: Go to /polls/create/ to make a new poll
+---
 
-Vote: Click "Vote on this Poll" on any active poll
+## 🎯 Quick Start
 
-View Results: See real-time percentages and vote counts
+### Using the Web Interface
 
-Using the API Directly
-List all polls:
+* **View Polls:** Navigate to `/polls/` to see all active polls
+* **Create Poll:** Go to `/polls/create/` to make a new poll
+* **Vote:** Click "Vote on this Poll" on any active poll
+* **View Results:** See real‑time percentages and vote counts
 
-bash
+### Using the API Directly
+
+**List all polls:**
+
+```bash
 curl http://127.0.0.1:8000/api/polls/
-Create a poll:
+```
 
-bash
+**Create a poll:**
+
+```bash
 curl -X POST http://127.0.0.1:8000/api/polls/ \
   -H "Content-Type: application/json" \
   -d '{
     "question": "What is your favorite color?",
     "choices": ["Red", "Blue", "Green"]
   }'
-Vote on a poll:
+```
 
-bash
+**Vote on a poll:**
+
+```bash
 curl -X POST http://127.0.0.1:8000/api/polls/1/vote/2/
-📚 API Documentation
-Endpoints
-Method	Endpoint	Description
-GET	/api/polls/	List all polls
-POST	/api/polls/	Create new poll
-GET	/api/polls/{id}/	Get poll details
-POST	/api/polls/{id}/vote/{choice_id}/	Vote on a poll
-GET	/api/polls/{id}/results/	Get poll results
-GET	/api/my-polls/	Get user's polls
-Poll Object
-json
+```
+
+---
+
+## 📚 API Documentation
+
+### Endpoints
+
+| Method | Endpoint                            | Description                        |
+| ------ | ----------------------------------- | ---------------------------------- |
+| GET    | `/api/polls/`                       | List all polls                     |
+| POST   | `/api/polls/`                       | Create new poll                    |
+| GET    | `/api/polls/{id}/`                  | Get poll details                   |
+| POST   | `/api/polls/{id}/vote/{choice_id}/` | Vote on a poll                     |
+| GET    | `/api/polls/{id}/results/`          | Get poll results                   |
+| GET    | `/api/my-polls/`                    | Get the authenticated user's polls |
+
+### Poll Object (example)
+
+```json
 {
   "id": 1,
   "question": "Sample question?",
@@ -114,59 +142,70 @@ json
   "total_votes": 10,
   "user_has_voted": false
 }
-🗂️ Project Structure
-text
+```
+
+---
+
+## 🗂️ Project Structure
+
+```
 polls_project/
 ├── polls/                 # Main polls app
-│   ├── models.py         # Poll, Choice, Vote models
-│   ├── views.py          # Template views
-│   ├── urls.py           # Frontend URLs
-│   └── templates/        # HTML templates
-├── api/                  # API app
-│   ├── views.py          # API views
-│   ├── serializers.py    # DRF serializers
-│   └── urls.py           # API endpoints
-├── static/               # Static files
-│   ├── css/style.css     # All styles
-│   └── js/main.js        # All JavaScript
-└── polls_project/        # Project settings
-    ├── settings.py       # Django settings
-    └── urls.py           # Main URL config
-🎨 Features in Detail
-Frontend Features
-Responsive Design: Works on desktop and mobile
+│   ├── models.py          # Poll, Choice, Vote models
+│   ├── views.py           # Template views
+│   ├── urls.py            # Frontend URLs
+│   └── templates/         # HTML templates
+├── api/                   # API app
+│   ├── views.py           # API views
+│   ├── serializers.py     # DRF serializers
+│   └── urls.py            # API endpoints
+├── static/                # Static files
+│   ├── css/style.css      # All styles
+│   └── js/main.js         # All JavaScript
+└── polls_project/         # Project settings
+    ├── settings.py        # Django settings
+    └── urls.py            # Main URL config
+```
 
-Real-time Updates: Vote percentages update automatically
+---
 
-Interactive UI: Hover effects and smooth animations
+## 🎨 Features in Detail
 
-Form Validation: Client and server-side validation
+### Frontend
 
-CSRF Protection: Secure form submissions
+* **Responsive Design:** Works on desktop and mobile
+* **Real‑time Updates:** Vote percentages update automatically
+* **Interactive UI:** Hover effects and smooth animations
+* **Form Validation:** Client and server‑side validation
+* **CSRF Protection:** Secure form submissions
 
-Backend Features
-RESTful API: Clean, predictable endpoints
+### Backend
 
-Data Validation: Comprehensive input validation
+* **RESTful API:** Clean, predictable endpoints
+* **Data Validation:** Comprehensive input validation
+* **Error Handling:** Graceful error responses
+* **Pagination:** Efficient data loading
+* **Admin Interface:** Full CRUD operations through Django admin
 
-Error Handling: Graceful error responses
+---
 
-Pagination: Efficient data loading
+## 🔧 Configuration
 
-Admin Interface: Full CRUD operations
+### Environment Variables
 
-🔧 Configuration
-Environment Variables
-Create a .env file for configuration:
+Create a `.env` file for configuration:
 
-env
+```
 DEBUG=True
 SECRET_KEY=your-secret-key
 ALLOWED_HOSTS=localhost,127.0.0.1
-Database
-Switch to PostgreSQL or MySQL by updating DATABASES in settings.py:
+```
 
-python
+### Database
+
+Switch to PostgreSQL or MySQL by updating `DATABASES` in `settings.py`:
+
+```python
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -177,26 +216,30 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-🤝 Contributing
-Fork the repository
+```
 
-Create a feature branch: git checkout -b feature/amazing-feature
+---
 
-Commit changes: git commit -m 'Add amazing feature'
+## 🤝 Contributing
 
-Push to branch: git push origin feature/amazing-feature
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
 
-Open a Pull Request
+---
 
-📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 📝 License
 
-🙏 Acknowledgments
-Django & Django REST Framework teams
+This project is licensed under the **MIT License** — see the `LICENSE` file for details.
 
+---
 
-Ready to start polling? Visit http://127.0.0.1:8000/ and create your first poll!
+## 🙏 Acknowledgments
 
-Community contributors
+Thanks to the Django & Django REST Framework teams. Inspiration from real‑world polling applications and community contributors.
 
-Inspiration from real-world polling applications
+---
+
+Ready to start polling? Visit `http://127.0.0.1:8000/` and create your first poll!
