@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Polls - Polls App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/css/style.css' %}">
+</head>
+<body>
+    <div class="container-medium">
+        <div class="header">
+            <h1>📊 All Polls</h1>
+            <p>Participate in polls and see real-time results</p>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="/" class="btn">🏠 Home</a>
+            <a href="/polls/create/" class="btn">➕ Create Poll</a>
+            <a href="/admin/" class="btn">⚙️ Admin</a>
+        </div>
+
+        <div id="polls-container" class="polls-container">
+            <div class="loading">Loading polls...</div>
+        </div>
+    </div>
+
+    <script src="{% static 'polls/js/main.js' %}"></script>
+</body>
+</html>

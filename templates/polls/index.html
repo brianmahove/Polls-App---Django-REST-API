@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls App - Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗳️ Polls App</h1>
+            <p>Create and participate in polls with real-time results</p>
+        </div>
+
+        <div class="cards">
+            <div class="card" onclick="window.location.href='/polls/'">
+                <div class="card-icon">📊</div>
+                <h2>View All Polls</h2>
+                <p>Browse through all available polls and cast your votes. See real-time results and statistics.</p>
+            </div>
+
+            <div class="card" onclick="window.location.href='/polls/create/'">
+                <div class="card-icon">➕</div>
+                <h2>Create New Poll</h2>
+                <p>Create your own poll with custom questions and multiple choice options. Share it with others!</p>
+            </div>
+
+            <div class="card" onclick="window.location.href='/admin/'">
+                <div class="card-icon">⚙️</div>
+                <h2>Admin Panel</h2>
+                <p>Manage polls, users, and view detailed analytics in the administration panel.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/polls/" class="btn btn-primary">Get Started</a>
+            <a href="/api/polls/" class="btn btn-secondary" style="margin-left: 15px;">API Explorer</a>
+        </div>
+
+        <div class="footer">
+            <p>Built with Django & Django REST Framework</p>
+        </div>
+    </div>
+
+    <script src="{% static 'polls/js/main.js' %}"></script>
+</body>
+</html>

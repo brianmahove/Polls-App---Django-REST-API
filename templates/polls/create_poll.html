@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Poll - Polls App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/css/style.css' %}">
+</head>
+<body>
+    <div class="container-small">
+        <div class="header">
+            <h1>➕ Create New Poll</h1>
+            <p>Create your own poll and share it with others</p>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="/" class="btn">🏠 Home</a>
+            <a href="/polls/" class="btn">📊 View Polls</a>
+            <a href="/admin/" class="btn">⚙️ Admin</a>
+        </div>
+
+        <div class="form-container">
+            <div id="message" class="message"></div>
+
+            <form id="createPollForm">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="question">Poll Question *</label>
+                    <input type="text" id="question" name="question" class="form-control" required 
+                           placeholder="Enter your poll question..." maxlength="200">
+                </div>
+
+                <div class="form-group">
+                    <label>Choices * (Minimum 2 required)</label>
+                    <div id="choices-container">
+                        <div class="choice-input">
+                            <input type="text" name="choices[]" class="form-control" placeholder="Choice 1" required maxlength="200">
+                            <button type="button" class="remove-choice" onclick="this.parentElement.remove()">×</button>
+                        </div>
+                        <div class="choice-input">
+                            <input type="text" name="choices[]" class="form-control" placeholder="Choice 2" required maxlength="200">
+                            <button type="button" class="remove-choice" onclick="this.parentElement.remove()">×</button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-choice" onclick="addChoice()">+ Add Another Choice</button>
+                </div>
+
+                <button type="submit" class="btn btn-success" id="submitBtn">
+                    Create Poll
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'polls/js/main.js' %}"></script>
+</body>
+</html>

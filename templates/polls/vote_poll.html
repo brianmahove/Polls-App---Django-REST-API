@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote - Polls App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/css/style.css' %}">
+</head>
+<body>
+    <div class="container-small">
+        <div class="header">
+            <h1>🗳️ Cast Your Vote</h1>
+            <p>Select your choice and submit your vote</p>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="/polls/" class="btn">📊 All Polls</a>
+            <a href="/" class="btn">🏠 Home</a>
+        </div>
+
+        <div id="poll-container">
+            <div class="loading">Loading poll...</div>
+        </div>
+    </div>
+
+    <script src="{% static 'polls/js/main.js' %}"></script>
+</body>
+</html>
