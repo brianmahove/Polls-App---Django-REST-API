@@ -1,0 +1,307 @@
+Here's a clean API documentation for your Polls App:
+
+# Polls App API Documentation
+
+## Base URL
+```
+http://127.0.0.1:8000/api/
+```
+
+## Authentication
+Currently, the API allows anonymous access for most endpoints. Some features may require authentication in the future.
+
+---
+
+## 📋 Polls Endpoints
+
+### 1. List All Polls
+**GET** `/polls/`
+
+**Response:**
+```json
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "question": "What's your favorite programming language?",
+            "created_by": {
+                "id": 1,
+                "username": "admin",
+                "email": "admin@example.com"
+            },
+            "pub_date": "2025-10-04T07:30:00Z",
+            "active": true,
+            "choices": [
+                {
+                    "id": 1,
+                    "choice_text": "Python",
+                    "votes": 5,
+                    "percentage": 50.0
+                },
+                {
+                    "id": 2,
+                    "choice_text": "JavaScript",
+                    "votes": 3,
+                    "percentage": 30.0
+                },
+                {
+                    "id": 3,
+                    "choice_text": "Java",
+                    "votes": 2,
+                    "percentage": 20.0
+                }
+            ],
+            "total_votes": 10,
+            "user_has_voted": false
+        }
+    ]
+}
+```
+
+### 2. Get Single Poll
+**GET** `/polls/{id}/`
+
+**Example:** `GET /api/polls/1/`
+
+**Response:** Same structure as list, but single poll object.
+
+### 3. Create New Poll
+**POST** `/polls/`
+
+**Headers:**
+```
+Content-Type: application/json
+X-CSRFToken: your-csrf-token
+```
+
+**Body:**
+```json
+{
+    "question": "What is your favorite database?",
+    "choices": ["PostgreSQL", "MySQL", "SQLite", "MongoDB"]
+}
+```
+
+**Response:**
+```json
+{
+    "id": 3,
+    "question": "What is your favorite database?",
+    "created_by": {
+        "id": 1,
+        "username": "admin",
+        "email": "admin@example.com"
+    },
+    "pub_date": "2025-10-04T08:00:00Z",
+    "active": true,
+    "choices": [
+        {
+            "id": 9,
+            "choice_text": "PostgreSQL",
+            "votes": 0,
+            "percentage": 0
+        },
+        {
+            "id": 10,
+            "choice_text": "MySQL",
+            "votes": 0,
+            "percentage": 0
+        },
+        {
+            "id": 11,
+            "choice_text": "SQLite",
+            "votes": 0,
+            "percentage": 0
+        },
+        {
+            "id": 12,
+            "choice_text": "MongoDB",
+            "votes": 0,
+            "percentage": 0
+        }
+    ],
+    "total_votes": 0,
+    "user_has_voted": false
+}
+```
+
+### 4. Vote on a Poll
+**POST** `/polls/{poll_id}/vote/{choice_id}/`
+
+**Example:** `POST /api/polls/1/vote/2/`
+
+**Headers:**
+```
+Content-Type: application/json
+X-CSRFToken: your-csrf-token
+```
+
+**Body:** (empty)
+
+**Response:**
+```json
+{
+    "success": true,
+    "message": "Vote submitted successfully!",
+    "poll_id": 1,
+    "choice_id": 2,
+    "choice_text": "JavaScript",
+    "new_vote_count": 4
+}
+```
+
+### 5. Get Poll Results
+**GET** `/polls/{id}/results/`
+
+**Example:** `GET /api/polls/1/results/`
+
+**Response:** Same as single poll endpoint, but specifically for viewing results.
+
+### 6. Get User's Polls
+**GET** `/my-polls/`
+
+**Response:** Same structure as list polls, but only polls created by the authenticated user.
+
+---
+
+## 🗳️ Voting System
+
+### How Voting Works:
+1. **Get poll details** → `GET /api/polls/1/`
+2. **View available choices** with current vote counts and percentages
+3. **Submit vote** → `POST /api/polls/1/vote/2/` (vote for choice ID 2)
+4. **View updated results** → `GET /api/polls/1/results/`
+
+### Vote Percentage Calculation:
+- Each choice shows `percentage` calculated as: `(choice_votes / total_votes) * 100`
+- Automatically updates when votes are cast
+
+---
+
+## 🔧 Frontend Integration
+
+### Basic Usage Examples:
+
+#### JavaScript Fetch Examples:
+
+**Get all polls:**
+```javascript
+const response = await fetch('/api/polls/');
+const data = await response.json();
+console.log(data.results);
+```
+
+**Create a poll:**
+```javascript
+const pollData = {
+    question: "Your question here",
+    choices: ["Option 1", "Option 2", "Option 3"]
+};
+
+const response = await fetch('/api/polls/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+    },
+    body: JSON.stringify(pollData)
+});
+```
+
+**Vote on a poll:**
+```javascript
+const response = await fetch(`/api/polls/${pollId}/vote/${choiceId}/`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+    }
+});
+```
+
+#### cURL Examples:
+
+**List polls:**
+```bash
+curl http://127.0.0.1:8000/api/polls/
+```
+
+**Create poll:**
+```bash
+curl -X POST http://127.0.0.1:8000/api/polls/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "question": "Test poll",
+    "choices": ["Yes", "No", "Maybe"]
+  }'
+```
+
+**Vote:**
+```bash
+curl -X POST http://127.0.0.1:8000/api/polls/1/vote/2/ \
+  -H "Content-Type: application/json"
+```
+
+---
+
+## 📊 Response Fields Explained
+
+### Poll Object:
+- `id`: Unique identifier
+- `question`: The poll question
+- `created_by`: User who created the poll
+- `pub_date`: Creation timestamp
+- `active`: Whether poll accepts new votes
+- `choices`: Array of choice objects
+- `total_votes`: Sum of all votes
+- `user_has_voted`: Whether current user has voted (requires auth)
+
+### Choice Object:
+- `id`: Unique identifier
+- `choice_text`: The choice option text
+- `votes`: Number of votes for this choice
+- `percentage`: Vote percentage (0-100)
+
+---
+
+## 🌐 Web Interface
+
+The API is complemented by a full web interface:
+
+- **Home**: `http://127.0.0.1:8000/`
+- **View Polls**: `http://127.0.0.1:8000/polls/`
+- **Create Poll**: `http://127.0.0.1:8000/polls/create/`
+- **Vote on Poll**: `http://127.0.0.1:8000/polls/{id}/vote/`
+
+---
+
+## ⚠️ Error Responses
+
+**404 Not Found:**
+```json
+{
+    "error": "Poll not found"
+}
+```
+
+**400 Bad Request:**
+```json
+{
+    "error": "This poll is no longer active"
+}
+```
+
+**400 Validation Error:**
+```json
+{
+    "question": ["This field is required."],
+    "choices": ["This field is required."]
+}
+```
+
+---
+
+This API provides complete CRUD operations for polls with real-time voting results and percentage calculations. The frontend automatically handles CSRF tokens and provides a seamless user experience.
